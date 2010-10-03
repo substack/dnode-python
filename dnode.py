@@ -11,26 +11,38 @@ class DNodeError(Exception):
 
 class DNode(object):
     def __init__(self, wrapped):
-        #DNode({})
         pass
 
-    def on(self):
-        # Event-listening behavior
-        pass
+    #def on(self, event, rxn):
+        # http://pypi.python.org/pypi/axel/0.0.3
+        # or
+        # http://pypi.python.org/pypi/Decovent/1.1.1
+        # perhaps.
+        # otoh, events for dnode proper are mostly used in the context of
+        # the RemoteEmitter, and can be unimplemented for now.
+    #    pass
 
     def connect(self, *args, **kwargs):
-        (host, port, block) = _conn_args(args, kwargs)
+        (host, port, block) = _conn_args(*args, **kwargs)
+        # Make connection here, using eventlet
+        # Somehow "hand over" control of connection to Conn.
         pass
 
     def listen(self):
-        (host, port, block) = _conn_args(args, kwargs)
+        (host, port, block) = _conn_args(*args, **kwargs)
+        # Make connection here, using eventlet
+        # Somehow "hand over" control of connection to Conn.
         pass
+
+    # Thought this was a cool feature of DNode proper. Not in dnode-perl.
+    def sync(self, fxn):
+        return lambda *args: args[-1](fxn(*args[0:-1]))
 
 # Sorts out arguments to connection, which get significant amounts of leeway 
 # actually! The flexibility of DNode's arguments is surprising.
 # In other news: Type checking in python sucks. 
 # Fuck you if you say I shouldn't be doing it anyway.
-def _conn_args(args, kwargs):
+def _conn_args(*args, **kwargs):
     #Host
     host = filter(lambda x: isinstance(x, types.StringType), args)
     if len(host) == 0:
