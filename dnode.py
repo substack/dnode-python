@@ -1,8 +1,8 @@
-from conn import Conn #parallels conn.js
+# from conn import Conn #parallels conn.js
 
-#connexxion stuff
-import eventlet
-from eventlet.green import socket
+# connexxion stuff
+# import eventlet
+# from eventlet.green import socket
 
 import types
 
@@ -50,7 +50,7 @@ def _conn_args(*args, **kwargs):
     else:
         (host, ) = host
     #Port
-    port = filter(isinstance(x, types.IntType), args)
+    port = filter(lambda x: isinstance(x, types.IntType), args)
     if len(port) == 0:
         try:
             port = kwargs['port']
