@@ -42,7 +42,7 @@ class DNode(object):
 # actually! The flexibility of DNode's arguments is surprising.
 # In other news: Type checking in python sucks. 
 # Fuck you if you say I shouldn't be doing it anyway.
-def _conn_args(*args, **kwargs):
+def _conn_args5(*args, **kwargs):
     #Host
     host = filter(lambda x: isinstance(x, types.StringType), args)
     if len(host) == 0:
