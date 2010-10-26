@@ -1,5 +1,5 @@
 # scrubs dnode images
-from traverse import Traverse
+from walk import Walk
 
 class scrub:
     def __init__(self):

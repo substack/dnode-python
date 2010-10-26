@@ -10,8 +10,7 @@ class Walk(object):
         self.obj = obj
 
     def walk(self, cb):
-        node = _Node({'value': self.obj,
-                      'path': self.path})
+        node = _Node({ 'value': self.obj, 'path': self.path })
         cb(node)
         #in dnode-perl, we checked 
 
@@ -21,7 +20,15 @@ class _Node(object):
         self.path = kwargs['path']
 
 # Basically, __getitem__ == __getattr__
-# http://modzer0.cs.uaf.edu/~substack/snippets/AttrDefaultDict.py
-# may be helpful.
-class Thesaurus(dic):
-    pass
+class Thesaurus(dict):
+    def __init__(self, obj):
+        self.update(obj);
+    
+    def __getitem__(self, key):
+        return self.setdefault(key, None)
+    
+    def __getattr__(self, key):
+        return self.setdefault(key, None)
+    
+    def __setattr__(self, key, value):
+        self[key] = value

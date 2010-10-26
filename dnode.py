@@ -1,8 +1,8 @@
 # from conn import Conn #parallels conn.js
 
 # connexxion stuff
-# import eventlet
-# from eventlet.green import socket
+#import eventlet
+#from eventlet.green import socket
 
 import types
 
