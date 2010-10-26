@@ -1,8 +1,8 @@
-# from conn import Conn #parallels conn.js
+from conn import Conn
 
 # connexxion stuff
-#import eventlet
-#from eventlet.green import socket
+import eventlet
+from eventlet.green import socket
 
 import types
 
@@ -11,7 +11,8 @@ class DNodeError(Exception):
 
 class DNode(object):
     def __init__(self, wrapped):
-        pass
+        self.pile = eventlet.GreenPile()
+        self.wrapper = wrapped
 
     #def on(self, event, rxn):
         # http://pypi.python.org/pypi/axel/0.0.3
@@ -25,13 +26,15 @@ class DNode(object):
     def connect(self, *args, **kwargs):
         (host, port, block) = _conn_args(*args, **kwargs)
         # Make connection here, using eventlet
-        # Somehow "hand over" control of connection to Conn.
-        pass
+        # Somehow "hand over" control of connection to conn.
+        s = socket.socket()
+        s.connect((socket.gethostbyname(host), port))
+        self.pile.spawn(Conn, s, self.wrapper)
 
     def listen(self):
         (host, port, block) = _conn_args(*args, **kwargs)
         # Make connection here, using eventlet
-        # Somehow "hand over" control of connection to Conn.
+        # Somehow "hand over" control of connection to conn.
         pass
 
     # Thought this was a cool feature of DNode proper. Not in dnode-perl.
